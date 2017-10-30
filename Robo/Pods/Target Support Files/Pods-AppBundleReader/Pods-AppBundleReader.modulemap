@@ -1,0 +1,6 @@
+framework module Pods_AppBundleReader {
+  umbrella header "Pods-AppBundleReader-umbrella.h"
+
+  export *
+  module * { export * }
+}
