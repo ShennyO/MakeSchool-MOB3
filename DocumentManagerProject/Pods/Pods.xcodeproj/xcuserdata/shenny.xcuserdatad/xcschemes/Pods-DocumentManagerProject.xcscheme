@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "086AAB1F06807E608C552FCD7488F27D"
-               BuildableName = "Pods_AppBundleReader.framework"
-               BlueprintName = "Pods-AppBundleReader"
+               BlueprintIdentifier = "8399F3370B1032EEA0DE980B05B9DA70"
+               BuildableName = "Pods_DocumentManagerProject.framework"
+               BlueprintName = "Pods-DocumentManagerProject"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,9 +47,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "086AAB1F06807E608C552FCD7488F27D"
-            BuildableName = "Pods_AppBundleReader.framework"
-            BlueprintName = "Pods-AppBundleReader"
+            BlueprintIdentifier = "8399F3370B1032EEA0DE980B05B9DA70"
+            BuildableName = "Pods_DocumentManagerProject.framework"
+            BlueprintName = "Pods-DocumentManagerProject"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
