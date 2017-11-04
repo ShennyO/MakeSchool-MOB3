@@ -22,10 +22,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     @IBOutlet weak var collageTableView: UITableView!
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.imagesArray = []
-        //1 get our collections model where we get the name of the collageFile, and the location on the internet where we can download the zipped iamges
+    
+    func getZippedImages() {
         Network.instance.fetch { (data) in
             let jsonDownloadURLS = try? JSONDecoder().decode([Collection].self, from: data)
             if let downloadURLS = jsonDownloadURLS {
@@ -36,6 +34,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
             }
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.imagesArray = []
+        //1 get our collections model where we get the name of the collageFile, and the location on the internet where we can download the zipped iamges
+        self.getZippedImages()
 
     }
     
@@ -60,16 +65,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     print("Successfully downloaded. Status code: \(statusCode)")
                 }
                 
-                
             } else {
                 print("Error took place while downloading a file. Error description: %@", error?.localizedDescription);
             }
             let fm = FileManager.default
             Zip.addCustomFileExtension("tmp")
             try? Zip.unzipFile(tempLocalUrl!, destination: destinationURL, overwrite: true, password: "", progress: { (progress) -> () in
-                
             })
-            
         }
         task.resume()
         
@@ -101,9 +103,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let fullDirectory = String(describing: cachesDir!) + "\(directoryName)"
         //Then add the CollageFile Path to our cache dictionary
         
-       
-        
-        
         self.downloadFile(fileURL: URL(string: selectedCollageFile.zippedImagesUrl)!, destinationURL: destinationURL) {
             
             self.picFileArray[indexPath.row].unzippedImagesUrl = URL(string:fullDirectory)!
@@ -122,6 +121,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
     }
+    
+    
     
     func getName(path: String) -> String {
         let lastURLComponent = URL(string: path)!
@@ -149,11 +150,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 var tempImages: [UIImage] = []
                 
               
-                    
-               
                 for image in images {
                     let fullDirectory = String(describing: cachesDir!) + "\(directoryName)"
                     let fullDirectoryURL = URL(string: fullDirectory)!
+                    let newImageURL =  fullDirectoryURL.appendingPathComponent(image)
                     let newImagePath = fullDirectoryURL.appendingPathComponent(image).path
                     let newImage = self.load(imagePath: newImagePath)
                     tempImages.append(newImage!)
