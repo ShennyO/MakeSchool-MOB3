@@ -20,6 +20,8 @@
 		843418DF1FAE7C15007D41F1 /* pictureFolderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843418DE1FAE7C15007D41F1 /* pictureFolderModel.swift */; };
 		843418E11FAE7CAF007D41F1 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843418E01FAE7CAF007D41F1 /* Networking.swift */; };
 		843418E31FAE8335007D41F1 /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843418E21FAE8335007D41F1 /* HelperFunctions.swift */; };
+		843418E51FAEEF86007D41F1 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843418E41FAEEF86007D41F1 /* DetailViewController.swift */; };
+		843418E71FAEF023007D41F1 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843418E61FAEF023007D41F1 /* ImageCollectionViewCell.swift */; };
 		ACC7192836499BB90FBA00F3 /* Pods_RefactoredDocumentManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFD54700D1E4D543EAB56CEB /* Pods_RefactoredDocumentManager.framework */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +63,8 @@
 		843418DE1FAE7C15007D41F1 /* pictureFolderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pictureFolderModel.swift; sourceTree = "<group>"; };
 		843418E01FAE7CAF007D41F1 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		843418E21FAE8335007D41F1 /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
+		843418E41FAEEF86007D41F1 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		843418E61FAEF023007D41F1 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		91865F32C9F68E69CCBFDB67 /* Pods-RefactoredDocumentManagerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RefactoredDocumentManagerUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RefactoredDocumentManagerUITests/Pods-RefactoredDocumentManagerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		AFFFD5C5FED13B2DE3ABEFE2 /* Pods-RefactoredDocumentManagerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RefactoredDocumentManagerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RefactoredDocumentManagerTests/Pods-RefactoredDocumentManagerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BFD54700D1E4D543EAB56CEB /* Pods_RefactoredDocumentManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RefactoredDocumentManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,7 +151,9 @@
 			children = (
 				843418AE1FAE7A25007D41F1 /* AppDelegate.swift */,
 				843418B01FAE7A25007D41F1 /* ViewController.swift */,
+				843418E41FAEEF86007D41F1 /* DetailViewController.swift */,
 				843418DC1FAE7B89007D41F1 /* PictureTableViewCell.swift */,
+				843418E61FAEF023007D41F1 /* ImageCollectionViewCell.swift */,
 				843418DE1FAE7C15007D41F1 /* pictureFolderModel.swift */,
 				843418E01FAE7CAF007D41F1 /* Networking.swift */,
 				843418E21FAE8335007D41F1 /* HelperFunctions.swift */,
@@ -472,10 +478,12 @@
 			files = (
 				843418DF1FAE7C15007D41F1 /* pictureFolderModel.swift in Sources */,
 				843418E11FAE7CAF007D41F1 /* Networking.swift in Sources */,
+				843418E71FAEF023007D41F1 /* ImageCollectionViewCell.swift in Sources */,
 				843418B11FAE7A25007D41F1 /* ViewController.swift in Sources */,
 				843418AF1FAE7A25007D41F1 /* AppDelegate.swift in Sources */,
 				843418DD1FAE7B89007D41F1 /* PictureTableViewCell.swift in Sources */,
 				843418E31FAE8335007D41F1 /* HelperFunctions.swift in Sources */,
+				843418E51FAEEF86007D41F1 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -53,7 +53,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //Downloads the contents of the URLs from the api we consumed and unzips it to the Cache Directory
     //When we click on the cell, we want to download the image file from the zipped images URL and unzip them to their specific folders
-    func downloadFile(fileURL: URL, destinationURL: URL, completion: () -> Void) {
+    func downloadFile(fileURL: URL, destinationURL: URL, completion: @escaping () -> Void) {
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
         let request = URLRequest(url:fileURL)
@@ -117,7 +117,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
                self.cleanedImagesDict[self.picFileArray[indexPath.row].collectionName] = tempArray
             }
-            performSegue(withIdentifier: "toDetail", sender: self)
+            self.performSegue(withIdentifier: "toDetail", sender: self)
         }
         
     }
@@ -153,7 +153,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 for image in images {
                     let fullDirectory = String(describing: cachesDir!) + "\(directoryName)"
                     let fullDirectoryURL = URL(string: fullDirectory)!
-                    let newImageURL =  fullDirectoryURL.appendingPathComponent(image)
                     let newImagePath = fullDirectoryURL.appendingPathComponent(image).path
                     let newImage = self.load(imagePath: newImagePath)
                     tempImages.append(newImage!)

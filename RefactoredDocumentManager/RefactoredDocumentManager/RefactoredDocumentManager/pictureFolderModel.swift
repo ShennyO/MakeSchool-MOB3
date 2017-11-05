@@ -12,11 +12,13 @@ struct pictureFolderModel: Codable {
     let collectionName: String
     let zippedImagesUrl: String
     var unzippedImagesUrl: URL?
+    var imagePaths: [String]?
     
     init(collectionName: String, zippedImagesUrl: String) {
         self.collectionName = collectionName
         self.zippedImagesUrl = zippedImagesUrl
         self.unzippedImagesUrl = nil
+        self.imagePaths = []
     }
     
 }
