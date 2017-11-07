@@ -8,16 +8,31 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, tableViewCellDelegate {
+    
+    
+    
+    func sendFolder(pictureFolder: pictureFolderModel, indexPath: IndexPath) {
+        downloadandUnzip(folderPath: URL(string: pictureFolder.zippedImagesUrl)!) {
+            let selectedCell = self.picturesTableView.cellForRow(at: indexPath) as! PictureTableViewCell
+            let unzippedImagesURL = getUnzippedImagesURL(folder: pictureFolder)
+            let imageLocations = getImageURLSFromFolder(folderLocation: unzippedImagesURL)
+            let filteredImageLocations = filterImageURLS(imageURLS: imageLocations)
+            self.pictureFolders[indexPath.row].imagePaths = filteredImageLocations
+            let fullImageLocationPath = getImageLocation(pictureLocation: filteredImageLocations[0], folder: pictureFolder)
+            selectedCell.thumbnailImage.image = loadImage(imagePath: fullImageLocationPath)
+            
+        }
+    }
+    
     
     var images: [UIImage] = []
     var pictureFolders: [pictureFolderModel] = []
-    var selectedIndexForFolder: Int?
-    var imagePathsToSend: [String]?
+    
+    
     
     @IBOutlet weak var picturesTableView: UITableView!
     
-    @IBAction func unwindToVC1(segue:UIStoryboardSegue) { }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -25,7 +40,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if self.pictureFolders.count == 0 {
         getZippedImages()
         }
-        
+
     }
     
     
@@ -53,6 +68,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if self.images.count != 0 {
             cell.thumbnailImage.image = self.images[indexPath.row]
         }
+        cell.delegate = self as tableViewCellDelegate
+        cell.pictureFolder = self.pictureFolders[indexPath.row]
+        cell.indexPath = indexPath
         cell.pictureFolderName.text = self.pictureFolders[indexPath.row].collectionName
         return cell
     }
@@ -60,55 +78,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         var selectedFolder = self.pictureFolders[indexPath.row]
-        self.selectedIndexForFolder = indexPath.row
-
-        
-        self.images = []
-        let downloadImageLink = URL(string: selectedFolder.zippedImagesUrl)
-        if selectedFolder.imagePaths?.count == 0 {
-            downloadandUnzip(folderPath: downloadImageLink!) {
-            //before we get our imagePaths from the selected folder's unzipped URL, we first have to set our unzipped URL.
-            let unzippedImagesURL = getUnzippedImagesURL(folder: selectedFolder)
-            selectedFolder.unzippedImagesUrl = unzippedImagesURL
-            let selectedFolderUnzippedURL = selectedFolder.unzippedImagesUrl
-           
-            let imageLocations = getImageURLSFromFolder(folderLocation: selectedFolderUnzippedURL!)
-            selectedFolder.imagePaths = imageLocations
-            self.imagePathsToSend = imageLocations
-            let filteredImageLocations = filterImageURLS(imageURLS: imageLocations)
-            for imageLocation in filteredImageLocations {
-                let fullImageLocationPath = getImageLocation(pictureLocation: imageLocation, folder: selectedFolder)
-                let newImage = loadImage(imagePath: fullImageLocationPath)
-                self.images.append(newImage!)
-                //now we have our array full of images, how can we display them
-                
-            }
-            
-            let cell = self.picturesTableView.cellForRow(at: indexPath) as! PictureTableViewCell
-            cell.thumbnailImage.image = self.images[0]
-            self.performSegue(withIdentifier: "toDetail", sender: self)
-        }
-           
-           
-        } else {
-            var selectedFolder = self.pictureFolders[indexPath.row]
-            let unzippedImagesURL = getUnzippedImagesURL(folder: selectedFolder)
-            selectedFolder.unzippedImagesUrl = unzippedImagesURL
-            let selectedFolderUnzippedURL = selectedFolder.unzippedImagesUrl
-            let imageLocations = getImageURLSFromFolder(folderLocation: selectedFolderUnzippedURL!)
-            selectedFolder.imagePaths = imageLocations
-            self.imagePathsToSend = imageLocations
-            let filteredImageLocations = filterImageURLS(imageURLS: imageLocations)
-            for imageLocation in filteredImageLocations {
-                let fullImageLocationPath = getImageLocation(pictureLocation: imageLocation, folder: selectedFolder)
-                let newImage = loadImage(imagePath: fullImageLocationPath)
-                self.images.append(newImage!)
-            }
-            let cell = self.picturesTableView.cellForRow(at: indexPath) as! PictureTableViewCell
-            cell.thumbnailImage.image = self.images[0]
-            self.performSegue(withIdentifier: "toDetail", sender: self)
-        }
-        
+         self.performSegue(withIdentifier: "toDetail", sender: self)
         
     }
     
@@ -116,10 +86,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if let identifier = segue.identifier {
             if identifier == "toDetail" {
                 let detailVC = segue.destination as! DetailViewController
-                detailVC.collageImages = self.images
-                let selectedImageURLS = self.imagePathsToSend!
-                detailVC.imagePaths = selectedImageURLS
-                detailVC.selectedIndexForFolder = self.selectedIndexForFolder
+                let indexPath = self.picturesTableView.indexPathForSelectedRow
+                detailVC.folder = self.pictureFolders[(indexPath?.row)!]
+
             }
         }
     }

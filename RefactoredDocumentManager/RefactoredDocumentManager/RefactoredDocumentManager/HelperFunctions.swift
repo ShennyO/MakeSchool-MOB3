@@ -19,14 +19,6 @@ func getName(zippedImageURL: String) -> String {
     return String(describing: name)
 }
 
-func unzipping(folderPath:URL) {
-    let fm = FileManager.default
-    let cachesDir = try? FileManager.default.url(for: .cachesDirectory, in: FileManager.SearchPathDomainMask.userDomainMask, appropriateFor: nil, create: false)
-    let destinationURL: URL = cachesDir!
-    Zip.addCustomFileExtension("tmp")
-    try? Zip.unzipFile(folderPath, destination:destinationURL, overwrite: true, password: "", progress: { (progress) -> () in
-    })
-}
 
 func downloadandUnzip(folderPath: URL, completion: @escaping () -> ()) {
     //DOWNLOADING THE CONTENTS FROM THE ZIPPED IMAGES URL
@@ -103,25 +95,31 @@ func filterImageURLS(imageURLS: [String]) -> [String] {
     return tempArray
 }
 
-func loadImage(imagePath: String) -> UIImage? {
-    
-    do {
-        let imagePathUrl = URL(fileURLWithPath: imagePath)
-        let imageData = try Data(contentsOf: imagePathUrl)
-        return UIImage(data: imageData)
-    } catch {
-        print("Error loading image : \(error)")
+func loadAllImagesFromFolder(folder: pictureFolderModel) -> [UIImage] {
+    var images: [UIImage] = []
+    let imageLocations = getImageURLSFromFolder(folderLocation: folder.unzippedImagesUrl!)
+    let filteredImageLocations = filterImageURLS(imageURLS: imageLocations)
+    for imageLocation in filteredImageLocations {
+        let fullImageLocationPath = getImageLocation(pictureLocation: imageLocation, folder: folder)
+        let newImage = loadImage(imagePath: fullImageLocationPath)
+        images.append(newImage!)
     }
-    return nil
+    return images
 }
 
-func getImageLocation(pictureLocation: String, folder: pictureFolderModel) -> String {
+func loadImage(imagePath: URL) -> UIImage? {
+    let newImage = UIImage(contentsOfFile: imagePath.path)
+    return newImage
+
+}
+
+func getImageLocation(pictureLocation: String, folder: pictureFolderModel) -> URL {
     let cachesDir = try? FileManager.default.url(for: .cachesDirectory, in: FileManager.SearchPathDomainMask.userDomainMask, appropriateFor: nil, create: false)
     let folderName = getName(zippedImageURL: folder.zippedImagesUrl)
     let imageFolderLocation = String(describing: cachesDir!) + folderName
     let imageFolderURL = URL(string: imageFolderLocation)
     let fullImageLocation = imageFolderURL?.appendingPathComponent(pictureLocation)
-    return fullImageLocation!.path
+    return fullImageLocation!
     
 }
 

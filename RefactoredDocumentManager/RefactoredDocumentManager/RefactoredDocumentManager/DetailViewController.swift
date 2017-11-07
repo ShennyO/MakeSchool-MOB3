@@ -16,9 +16,20 @@ class DetailViewController: UIViewController, UICollectionViewDelegateFlowLayout
     var collageImages: [UIImage] = []
     var imagePaths: [String] = []
     var selectedIndexForFolder: Int?
+    var folder: pictureFolderModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if self.folder?.imagePaths?.count != 0 {
+        let unzippedImagesURL = getUnzippedImagesURL(folder: self.folder!)
+        let imageLocations = getImageURLSFromFolder(folderLocation: unzippedImagesURL)
+        let filteredImageLocations = filterImageURLS(imageURLS: imageLocations)
+        for imageLocation in filteredImageLocations {
+            let fullImageLocationPath = getImageLocation(pictureLocation: imageLocation, folder: self.folder!)
+            let newImage = loadImage(imagePath: fullImageLocationPath)
+            self.collageImages.append(newImage!)
+            }
+        }
 
         // Do any additional setup after loading the view.
     }
