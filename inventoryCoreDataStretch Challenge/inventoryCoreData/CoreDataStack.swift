@@ -33,12 +33,14 @@ public final class CoreDataStack {
         //receiving the default view Context that is already in the persistentContainer
         //This automatically links the context to the main Queue for us
         let context = persistentContainer.viewContext
+        context.name = "View Context"
         return context
     }()
     
     lazy var downloadContext: NSManagedObjectContext = {
         let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         context.persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
+        context.name = "Download Context"
         return context
     }()
     

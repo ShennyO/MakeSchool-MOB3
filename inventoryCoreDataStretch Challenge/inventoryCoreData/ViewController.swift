@@ -23,8 +23,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let fetchedCart = fetchCartFromCoreData(entityName: "Cart") as? [Cart]
         guard let cart = fetchedCart?.first else {
-            let newCart = Cart(context: stack.downloadContext)
-            stack.saveTo(context: stack.downloadContext)
+            let newCart = Cart(context: stack.viewContext)
+            newCart.name = "User Cart"
+            stack.saveTo(context: stack.viewContext)
             return
         }
         
@@ -35,15 +36,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func sendInventory(inventoryIndexPath: IndexPath) {
-//        let coreData = CoreDataStack.instance
+        
         
         defer {
            stack.saveTo(context: stack.downloadContext)
         }
         
         
-        let selectedInventory = self.inventoryList[inventoryIndexPath.row]        
+        let selectedInventory = self.inventoryList[inventoryIndexPath.row]
+        
         self.cart?.addToInventories(selectedInventory)
+        selectedInventory.cart = self.cart
+        
     }
     
     
