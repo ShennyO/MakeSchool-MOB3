@@ -43,6 +43,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         
+        //test
+        
         let selectedInventory = self.inventoryList[inventoryIndexPath.row]
         
         self.cart?.addToInventories(selectedInventory)
