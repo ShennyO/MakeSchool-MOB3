@@ -32,7 +32,7 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         if self.cart == nil {
             let fetchedCart = fetchCartFromCoreData(entityName: "Cart") as? [Cart]
             if fetchedCart! == [] {
-                
+               
             }
             
             if let cart = fetchedCart?[0] {
