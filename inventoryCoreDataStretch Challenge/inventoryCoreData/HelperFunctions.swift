@@ -27,6 +27,8 @@ import CoreData
 //
 //}
 
+//Could definitely do an enum for the fetch functions from CoreData
+
 func fetchCartFromCoreData(entityName: String) -> [NSManagedObject]? {
     let coreData = CoreDataStack.instance
     

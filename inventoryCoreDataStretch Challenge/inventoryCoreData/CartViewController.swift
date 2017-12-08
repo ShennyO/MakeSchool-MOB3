@@ -32,7 +32,8 @@ class CartViewController: UIViewController, UITableViewDelegate, UITableViewData
         if self.cart == nil {
             let fetchedCart = fetchCartFromCoreData(entityName: "Cart") as? [Cart]
             if fetchedCart! == [] {
-               
+               let cart = Cart(context: CoreDataStack.instance.viewContext)
+               CoreDataStack.instance.saveTo(context: CoreDataStack.instance.viewContext)
             }
             
             if let cart = fetchedCart?[0] {
